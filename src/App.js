@@ -2,7 +2,7 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import { Navbar, NavbarBrand, NavItem } from 'reactstrap'
+import { Navbar, NavbarBrand, NavItem, NavbarToggler, Collapse, Nav, NavLink, Button} from 'reactstrap'
 
 const tempID = "628c6c0f3b8adbfca80804b9"
 
@@ -23,26 +23,59 @@ const test = () => {
 })
 }
 
+const signIn = () => {
+  fetch("signin")
+    .then(res => res.text())
+    .then(res => this.setState({ apiResponse: res}))
+    .catch(err => 
+      console.log(err))
+}
+
 function App() {
   return (
-    <div className="App">
-        <h1>hello</h1>
-        
-        <Navbar>
-          <NavbarBrand>
-            DivvyUp
-          </NavbarBrand>
-          <NavItem>
+    <div>
+    <Navbar
+      color="light"
+      expand="md"
+      light
+    >
+    <NavbarBrand href="/">
+      DivvyUp
+    </NavbarBrand>
+    <NavbarToggler onClick={function noRefCheck(){}} />
+    <Collapse navbar>
+      <Nav
+        className="ms-auto"
+        navbar
+      >
+        <NavItem>
+          <NavLink to="">
             Home
-          </NavItem>
-          <NavItem>
-            How to use
-          </NavItem>
-          <NavItem>
-            About us
-          </NavItem>
-        </Navbar>
-    </div>
+          </NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink to="">
+            How to use  
+          </NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink to="">
+            About Us
+          </NavLink>
+        </NavItem>
+
+        <NavItem>
+          <NavLink href='/signin'>
+            Test
+            {/* <a href="signin" className="btn btn-primary" role="button">Log in</a>
+            <a href="/users/">See Login Info</a>
+            <Button color="primary" onClick={signIn}>Sign-In</Button> */}
+          </NavLink>
+        </NavItem>
+      </Nav>
+    </Collapse>
+  </Navbar>
+</div>
   );
 }
 
