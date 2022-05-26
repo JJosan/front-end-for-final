@@ -1,4 +1,5 @@
 import './App.css';
+import MainPage from './Components/MainPage/MainPage';
 import MyNavbar from './Components/MyNavbar/MyNavbar.js';
 
 const tempID = "628c6c0f3b8adbfca80804b9"
@@ -32,6 +33,7 @@ function App() {
   return (
     <div>
       <MyNavbar />
+      <MainPage />
     </div>
   );
 }
