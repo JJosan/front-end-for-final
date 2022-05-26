@@ -1,8 +1,5 @@
-
 import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
-
-import { Navbar, NavbarBrand, NavItem, NavbarToggler, Collapse, Nav, NavLink, Button} from 'reactstrap'
+import MyNavbar from './Components/MyNavbar/MyNavbar.js';
 
 const tempID = "628c6c0f3b8adbfca80804b9"
 
@@ -34,48 +31,8 @@ const signIn = () => {
 function App() {
   return (
     <div>
-    <Navbar
-      color="light"
-      expand="md"
-      light
-    >
-    <NavbarBrand href="/">
-      DivvyUp
-    </NavbarBrand>
-    <NavbarToggler onClick={function noRefCheck(){}} />
-    <Collapse navbar>
-      <Nav
-        className="ms-auto"
-        navbar
-      >
-        <NavItem>
-          <NavLink to="">
-            Home
-          </NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink to="">
-            How to use  
-          </NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink to="">
-            About Us
-          </NavLink>
-        </NavItem>
-
-        <NavItem>
-          <NavLink href='/signin'>
-            Test
-            {/* <a href="signin" className="btn btn-primary" role="button">Log in</a>
-            <a href="/users/">See Login Info</a>
-            <Button color="primary" onClick={signIn}>Sign-In</Button> */}
-          </NavLink>
-        </NavItem>
-      </Nav>
-    </Collapse>
-  </Navbar>
-</div>
+      <MyNavbar />
+    </div>
   );
 }
 
