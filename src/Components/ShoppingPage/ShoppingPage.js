@@ -1,10 +1,11 @@
 import React from 'react'
 import './ShoppingPage.css'
-import { Navbar, List, Input, Button } from 'reactstrap'
+import {List, Input, Button } from 'reactstrap'
 
 const tripID = null
 
-function ShoppingPage() {
+function ShoppingPage({ testID }) {
+  console.log(testID)
   return (
     <div className='ShoppingPage'>
         <List type="inline" id="shoppingList" onLoad={showList}></List>
@@ -20,9 +21,16 @@ async function addItem() {
   let quantity = document.getElementById("itemQuantity").value;
   console.log(tripID)
   try {
-      await fetchJSON(`api/${apiVersion}/items/add?item=${item}&quantity=${quantity}&tripID=${tripID}`, {
-          method: "POST"
-      })
+       const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
+        };
+        fetch(`api/${apiVersion}/items/add?item=${item}&quantity=${quantity}&tripID=${tripID}`, requestOptions)
+            .then(response => response.json())
+            .then(data => console.log(data));
+      // await fetchJSON(`api/${apiVersion}/items/add?item=${item}&quantity=${quantity}&tripID=${tripID}`, {
+      //     method: "POST"
+      // })
   } catch(error) {
       throw(error)
   }
@@ -30,7 +38,7 @@ async function addItem() {
 
 async function showList(){
   try {
-    let receipt = await fetchJSON(`api/${apiVersion}/items/receipt?tripID=${tripID}`)
+    let receipt = await fetch(`api/${apiVersion}/items/receipt?tripID=${tripID}`)
     var shoppingList = document.getElementById("shoppingList")
     for (let i = 0; i < receipt.length; i++) {
         var listItem = document.createElement(ListInlineItem)

@@ -1,15 +1,10 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import './MyNavbar.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { Navbar, NavbarBrand, NavItem, NavbarToggler, Collapse, Nav, NavLink} from 'reactstrap'
-import { Context } from '../../LoginState.js'
-
-import Test from '../MainPage/MainPage.js'
 
 
 function MyNavbar() {
-
-  const[loginState, setLoginState] = useContext(Context);
 
   const signIn = async () => {
 
