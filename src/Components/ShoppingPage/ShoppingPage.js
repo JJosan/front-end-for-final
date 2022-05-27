@@ -2,16 +2,19 @@ import React from 'react'
 import './ShoppingPage.css'
 import {List, Input, Button } from 'reactstrap'
 
-const tripID = null
+let tripID = null
+const apiVersion="v1"
 
-function ShoppingPage({ testID }) {
-  console.log(testID)
+function ShoppingPage() {
+  getTripID();
   return (
     <div className='ShoppingPage'>
-        <List type="inline" id="shoppingList" onLoad={showList}></List>
+        {/* <List type="inline" id="shoppingList" onLoad={showList}></List> */}
         <Input name="itemNameInput" id="itemNameInput" placeholder="Input item name" />
         <Input name="itemQuantityInput" id="itemQuantityInput" placeholder="Input item quantity" />
         <Button onClick={addItem}>add item</Button>
+        <Button onClick={getTripID}>get tripID</Button>
+        <div id="tripID"></div>
     </div>
   )
 }
@@ -36,16 +39,30 @@ async function addItem() {
   }
 }
 
-async function showList(){
-  try {
-    let receipt = await fetch(`api/${apiVersion}/items/receipt?tripID=${tripID}`)
-    var shoppingList = document.getElementById("shoppingList")
-    for (let i = 0; i < receipt.length; i++) {
-        var listItem = document.createElement(ListInlineItem)
-        listItem.innerHTML = `${receipt[i].NameOfItem}:${receipt[i].Quantity}`
-        shoppingList.appendChild(listItem);
-    }
-  }catch(error) {
+// async function showList(){
+//   try {
+//     let receipt = await fetch(`api/${apiVersion}/items/receipt?tripID=${tripID}`)
+//     var shoppingList = document.getElementById("shoppingList")
+//     for (let i = 0; i < receipt.length; i++) {
+//         var listItem = document.createElement(ListInlineItem)
+//         listItem.innerHTML = `${receipt[i].NameOfItem}:${receipt[i].Quantity}`
+//         shoppingList.appendChild(listItem);
+//     }
+//   }catch(error) {
+//     throw(error)
+//   }
+// }
+
+async function getTripID(){
+  try{
+    fetch(`api/${apiVersion}/trips/tripID`)
+    .then(response => response.json())
+    .then(data => {
+      tripID = data.tripID
+      document.getElementById("tripID").innerHTML = data.tripID
+    })
+    //
+  }catch(error){
     throw(error)
   }
 }
