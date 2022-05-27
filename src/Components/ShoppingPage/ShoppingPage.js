@@ -45,7 +45,6 @@ async function showList(){
   try {
     const testHandler = (id) => {
       console.log(`button clicked: ${id}`)
-      
     }
     console.log(tripID)
     await fetch(`api/${apiVersion}/items/receipt?tripID=${tripID}`)
@@ -60,7 +59,9 @@ async function showList(){
         // buttonItem.className = "btn"
         buttonItem.innerHTML = "delete"
         buttonItem.id = receipt[i]._id;
-        buttonItem.addEventListener("click", testHandler(buttonItem.id));
+        buttonItem.addEventListener("click", function(){
+          testHandler(receipt[i]._id)
+        });
         shoppingList.appendChild(buttonItem);
         shoppingList.appendChild(listItem);
       } 
