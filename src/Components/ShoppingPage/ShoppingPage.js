@@ -1,10 +1,9 @@
-import React, {useState} from 'react'
+import React from 'react'
 import './ShoppingPage.css'
 import {List, Input, Button} from 'reactstrap'
 
 let tripID = null
 const apiVersion="v1"
-
 
 function ShoppingPage() {
   
@@ -43,8 +42,16 @@ async function addItem() {
 
 async function showList(){
   try {
-    const testHandler = (id) => {
-      console.log(`button clicked: ${id}`)
+    const deleteHandler = async (id) => {
+      // currently, endpoint only prints out selected item
+      const requestOptions = {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' }
+      };
+      await fetch(`api/${apiVersion}/items/delete?itemID=${id}`, requestOptions)
+          .then(response => response.json())
+          .then(data => console.log(data));
+      showList();
     }
     console.log(tripID)
     await fetch(`api/${apiVersion}/items/receipt?tripID=${tripID}`)
@@ -60,7 +67,7 @@ async function showList(){
         buttonItem.innerHTML = "delete"
         buttonItem.id = receipt[i]._id;
         buttonItem.addEventListener("click", function(){
-          testHandler(receipt[i]._id)
+          deleteHandler(receipt[i]._id)
         });
         shoppingList.appendChild(buttonItem);
         shoppingList.appendChild(listItem);
