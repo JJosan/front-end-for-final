@@ -1,10 +1,9 @@
-import React, {useState} from 'react'
+import React from 'react'
 import './ShoppingPage.css'
 import {List, Input, Button} from 'reactstrap'
 
 let tripID = null
 const apiVersion="v1"
-
 
 function ShoppingPage() {
   
@@ -40,7 +39,6 @@ async function addItem() {
   }
 }
 
-
 async function showList(){
   try {
     const testHandler = (id) => {
@@ -60,7 +58,9 @@ async function showList(){
         // buttonItem.className = "btn"
         buttonItem.innerHTML = "delete"
         buttonItem.id = receipt[i]._id;
-        buttonItem.addEventListener("click", testHandler(buttonItem.id));
+        buttonItem.addEventListener("click", function(){
+          testHandler(buttonItem.id)
+        });
         shoppingList.appendChild(buttonItem);
         shoppingList.appendChild(listItem);
       } 
