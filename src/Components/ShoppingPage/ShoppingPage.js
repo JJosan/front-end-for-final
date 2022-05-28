@@ -18,6 +18,9 @@ function ShoppingPage() {
         <Button onClick={showList}>Refresh List</Button>
         <div id="tripID"></div>
         <List type="inline" id="shoppingList"></List>
+
+        <Button onClick={showSubtotal}>Checkout</Button>
+        <div id="subtotals"></div>
     </div>
   )
 
@@ -52,6 +55,16 @@ async function showList(){
           .then(data => console.log(data));
       showList();
     }
+    const uploadPriceHandler = async (id, price) => {
+      // currently, endpoint only prints out selected item
+      const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' }
+      };
+      await fetch(`api/${apiVersion}/items/addPrice?itemID=${id}&tripID=${tripID}&price=${price}`, requestOptions)
+          .then(response => response.json())
+          .then(data => console.log(data));
+    }
     console.log(tripID)
     await fetch(`api/${apiVersion}/items/receipt?tripID=${tripID}`)
     .then(response => response.json())
@@ -61,14 +74,30 @@ async function showList(){
       for (let i = 0; i < receipt.length; i++) {
         var listItem = document.createElement("ListInlineItem")
         listItem.innerHTML = `${receipt[i].NameOfItem}:${receipt[i].Quantity} <br>`
-        var buttonItem = document.createElement("Button")
-        // buttonItem.className = "btn"
-        buttonItem.innerHTML = "delete"
-        buttonItem.id = receipt[i]._id;
-        buttonItem.addEventListener("click", function(){
+
+        var deleteButtonItem = document.createElement("Button")
+        deleteButtonItem.innerHTML = "delete"
+        deleteButtonItem.id = receipt[i]._id;
+        deleteButtonItem.addEventListener("click", function(){
           deleteHandler(receipt[i]._id)
         });
-        shoppingList.appendChild(buttonItem);
+
+        var priceItem = document.createElement("Input")
+        priceItem.setAttribute("type", "text")
+        priceItem.id = "Input" + receipt[i]._id;
+
+        var uploadPriceButton = document.createElement("Button")
+        uploadPriceButton.innerHTML = "Upload"
+        uploadPriceButton.id = "Button" + receipt[i]._id;
+        uploadPriceButton.addEventListener("click", function(){
+            var priceInput = document.getElementById(`Input${receipt[i]._id}`).value
+            console.log(document.getElementById(`Input${receipt[i]._id}`))
+            uploadPriceHandler(receipt[i]._id, priceInput)
+        })
+
+        shoppingList.appendChild(deleteButtonItem);
+        shoppingList.appendChild(priceItem);
+        shoppingList.appendChild(uploadPriceButton);
         shoppingList.appendChild(listItem);
       } 
     })   
@@ -86,6 +115,21 @@ async function getTripID(callback){
       document.getElementById("tripID").innerHTML = data.tripID
     })
     callback();
+  }catch(error){
+    throw(error)
+  }
+}
+
+async function showSubtotal() {
+  try {
+    document.getElementById("subtotals").innerText = ""
+    await fetch(`api/${apiVersion}/trips/subtotal?tripID=${tripID}`)
+    .then(response => response.json()) 
+    .then(datas => {
+      datas.forEach(data => {
+        document.getElementById("subtotals").innerText += `${data.username}, ${data.subtotal}\n`
+      })
+    })
   }catch(error){
     throw(error)
   }

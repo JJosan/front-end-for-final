@@ -8,7 +8,7 @@ const apiVersion = "v1"
 function MainPage() {
 
     async function createNewTrip(){
-        fetch(`api/${apiVersion}/trips/add`,{
+        await fetch(`api/${apiVersion}/trips/add`,{
             method: "POST"
         })
         .then(response => {
@@ -30,7 +30,7 @@ function MainPage() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ tripID: tripID })
             };
-            fetch(`api/${apiVersion}/trips/addUser`, requestOptions)
+            await fetch(`api/${apiVersion}/trips/addUser`, requestOptions)
                 .then(response => response.json())
                 .then(data => console.log(data));
         } catch(error) {
