@@ -39,12 +39,15 @@ function MainPage() {
     }
 
     return (
-        <div className='MainPage'>
+        <div className='MainPage_container'>
+            <div className='MainPage'>
+                <Link to='shoppingpage'><Button onClick={createNewTrip}>Host New Group</Button></Link>
+                <Input name="tripIDInput" id="tripIDInput" placeholder="Input TripID" />
+                <Link to='/shoppingpage'><Button onClick={joinTrip}>Join Group</Button></Link>
+                <div id="joinID"></div>
+            </div>
             {/* server blows up if the same person makes more than 1 trip */}
-            <Link to='shoppingpage'><Button onClick={createNewTrip}>Host New Group</Button></Link>
-            <Input name="tripIDInput" id="tripIDInput" placeholder="Input TripID" />
-            <Link to='/shoppingpage'><Button onClick={joinTrip}>Join Group</Button></Link>
-            <div id="joinID"></div>
+            
         </div>
   )
 }

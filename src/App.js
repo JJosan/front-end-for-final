@@ -7,7 +7,7 @@ import MyNavbar from './Components/MyNavbar/MyNavbar.js';
 
 function App() {
   return (
-    <div>
+    <div className='app'>
       <MyNavbar />
       <Routes>
         <Route path='/' element={ <MainPage  /> } />

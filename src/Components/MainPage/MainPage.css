@@ -1,4 +1,4 @@
-.MainPage {
+/* .MainPage {
     background: rgba(19, 35, 47, 0.9);
     padding: 40px;
     max-width: 600px;
@@ -6,13 +6,25 @@
     border-radius: 4px;
     box-shadow: 0 4px 10px 4px rgba(19, 35, 47, 0.3);
     font-family: 'Titillium Web', sans-serif;
+} */
+
+.MainPage_container {
+    margin-top: 50px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
-#butt {
-    margin: 1em;
+.MainPage {
+    width: 60%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 1.5em;
 }
 
-#tripIDInput {
+
+/* #tripIDInput {
     margin: 1em;
     width: 50%;
-}
+} */
