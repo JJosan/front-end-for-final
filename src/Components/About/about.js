@@ -1,8 +1,7 @@
 import React from 'react'
 import './about.css'
-import { Navbar } from 'reactstrap'
 
-function ShoppingPage() {
+function about() {
   return (
     <div className='about'>
 

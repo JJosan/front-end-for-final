@@ -1,15 +1,15 @@
 import React from 'react'
 import './howTo.css'
-import { Navbar } from 'reactstrap'
 
-function ShoppingPage() {
+function HowTo() {
   return (
-    <div className='howTo'>
+    <div className='HowTo'>
 
+    <p>test</p>
 
 
     </div>
   )
 }
 
-export default howTo
+export default HowTo

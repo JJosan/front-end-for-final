@@ -12,11 +12,11 @@ function MyNavbar() {
       <Collapse navbar>
         <Nav className="ms-auto" navbar >
 
-          <NavItem><NavLink to="Test">Home</NavLink></NavItem>
+          <NavItem><NavLink href="/">Home</NavLink></NavItem>
 
-          <NavItem><NavLink to="">How to use</NavLink></NavItem>
+          <NavItem><NavLink href="/HowTo">How to use</NavLink></NavItem>
 
-          <NavItem><NavLink to="">About Us</NavLink></NavItem>
+          <NavItem><NavLink href="/about">About Us</NavLink></NavItem>
 
           <NavItem><NavLink href='/signin'>Sign In</NavLink></NavItem>
 
