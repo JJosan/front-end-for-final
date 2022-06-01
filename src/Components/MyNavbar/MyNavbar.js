@@ -4,7 +4,6 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import { Navbar, NavbarBrand, NavItem, NavbarToggler, Collapse, Nav, NavLink} from 'reactstrap'
 
 function MyNavbar() {
-  
   const [nav, setNav] = useState(false);
   const toggleNav = () => setNav(!nav);
 
@@ -21,14 +20,31 @@ function MyNavbar() {
 
           <NavItem><NavLink href="/about">About Us</NavLink></NavItem>
 
-          <NavItem><NavLink href='/signin'>Sign In</NavLink></NavItem>
-
-          <NavItem><NavLink href='signout'>Sign Out</NavLink></NavItem>
+          {/* <div>{
+        checkLogin()
+          ? ( */}
+            <NavItem><NavLink href='/signin'>Sign In</NavLink></NavItem>
+            {/* )
+          : (  */}
+            <NavItem><NavLink href='signout'>Sign Out</NavLink></NavItem>
+            {/* )
+      }</div> */}
 
       </Nav>
     </Collapse>
   </Navbar>
   )
+
+  // async function checkLogin() {
+  //   try {
+  //         var isLoggedIn = await fetch(`api/users/loggedIn`).then(data => console.log(data));
+  //   } catch(error) {
+  //       throw(error)
+  //   }
+  //   console.log(isLoggedIn)
+  //   return isLoggedIn;
+  // }
+  
 }
 
 export default MyNavbar
