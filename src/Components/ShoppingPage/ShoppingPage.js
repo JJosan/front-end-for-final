@@ -8,11 +8,14 @@ const apiVersion="v1"
 
 function ShoppingPage() {
   getTripID(showList);
+  getUsername()
   let navigate = useNavigate();
   return (
     <div className='ShoppingPage_container'>
       <div className='ShoppingPage'>
-
+          <div className='ShoppingPage_userDetail'>
+            <div id='Username'></div>
+          </div>
           <div className='ShoppingPage_joinDetail'>
             Join ID: <div id='tripID'></div>
           </div>
@@ -177,9 +180,22 @@ async function getTripID(callback){
     .then(response => response.json())
     .then(data => {
       tripID = data.tripID
-      document.getElementById("tripID").innerHTML = `${data.tripID}`;
+      document.getElementById("tripID").innerText = ` ${data.tripID}`;
     })
     callback();
+  }catch(error){
+    throw(error)
+  }
+}
+
+async function getUsername(){
+  try{
+    await fetch(`/users`)
+    .then(response => response.json())
+    .then(data => {
+      document.getElementById("Username").innerText = ` ${data.name}'s Shopping Cart`;
+    })
+
   }catch(error){
     throw(error)
   }

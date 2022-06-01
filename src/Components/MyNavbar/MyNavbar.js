@@ -7,6 +7,21 @@ function MyNavbar() {
   const [nav, setNav] = useState(false);
   const toggleNav = () => setNav(!nav);
 
+  const [test, setTest] = useState(false)
+  
+
+  async function checkLogin() {
+    await fetch("/users")
+    .then(response => response.json())
+    .then(data => {
+      if (data.name != null) {
+        setTest(true)
+      } else {
+        setTest(false)
+      }
+    })
+  }
+  checkLogin()
   return (
     <Navbar color="light" expand="md" light>
       <NavbarBrand href="/">DivvyUp</NavbarBrand>
@@ -18,26 +33,17 @@ function MyNavbar() {
 
           <NavItem><NavLink href="/HowTo">How to use</NavLink></NavItem>
 
-
-            <NavItem><NavLink href='/signin'>Sign In</NavLink></NavItem>
-  
+          <NavItem><NavLink href="/about">About Us</NavLink></NavItem>
+           {test ?
             <NavItem><NavLink href='signout'>Sign Out</NavLink></NavItem>
-
+           :
+           <NavItem><NavLink href='/signin'>Sign In</NavLink></NavItem>
+           }
 
       </Nav>
     </Collapse>
   </Navbar>
   )
-
-  // async function checkLogin() {
-  //   try {
-  //         var isLoggedIn = await fetch(`api/users/loggedIn`).then(data => console.log(data));
-  //   } catch(error) {
-  //       throw(error)
-  //   }
-  //   console.log(isLoggedIn)
-  //   return isLoggedIn;
-  // }
   
 }
 
