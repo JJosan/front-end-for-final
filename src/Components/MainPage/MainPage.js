@@ -1,14 +1,16 @@
-import React from 'react'
+import React, {useState} from 'react'
 import './MainPage.css'
-import {Button, Input} from 'reactstrap'
-import { Link } from 'react-router-dom'
+import {Button, Input, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap'
+import { Link, useNavigate } from 'react-router-dom'
 
 const apiVersion = "v1"
 
 
-
 function MainPage() {
-    
+    let navigate = useNavigate();
+
+    const [modal, setModal] = useState(false);
+    const toggleModal = () => setModal(!modal);
 
     async function createNewTrip(){
         await fetch(`api/${apiVersion}/trips/add`,{
@@ -22,8 +24,10 @@ function MainPage() {
                 console.log(err)
             })
         })
+        navigate("/shoppingpage");
     }
-    
+
+
     async function joinTrip(){
         let tripID = document.getElementById("tripIDInput").value;
         console.log(tripID)
@@ -36,6 +40,7 @@ function MainPage() {
             await fetch(`api/${apiVersion}/trips/addUser`, requestOptions)
                 .then(response => response.json())
                 .then(data => console.log(data));
+            navigate("/shoppingpage");
         } catch(error) {
             throw(error)
         }
@@ -44,14 +49,38 @@ function MainPage() {
     return (
         <div className='MainPage_container'>
             <div className='MainPage'>
-                <Link to='shoppingpage'><Button onClick={createNewTrip}>Host New Group</Button></Link>
-                <Input name="tripIDInput" id="tripIDInput" placeholder="Input TripID" />
-                <Link to='/shoppingpage'><Button onClick={joinTrip}>Join Group</Button></Link>
-                <div id="joinID"></div>
+            {/* server blows up if the same person makes more than 1 trip */} 
+                <div className="TitlePage">DivvyUp</div>
+                <Link to='shoppingpage'><Button id='MainPage_CreateTrip' onClick={createNewTrip}>Host New Group</Button></Link>
+                <div>
+                <Button id='MainPage_JoinTrip' onClick={toggleModal}>
+                    Join Group
+                </Button>
+                <Modal isOpen={modal}>
+                    {/* <ModalHeader> Modal title </ModalHeader> */}
+                    <ModalBody>  
+                        <Input name="tripIDInput" id="tripIDInput" placeholder="Input TripID" />
+                    </ModalBody>
+                    <ModalFooter>
+                        <Link to='shoppingpage'>
+                            <Button color="primary" onClick={joinTrip}>
+                                Join Group
+                            </Button>
+                        </Link>
+                        {' '}
+                        <Button onClick={toggleModal}>
+                            Cancel
+                        </Button>
+                    </ModalFooter>
+                </Modal>
             </div>
+            </div>
+                
+            
             {/* server blows up if the same person makes more than 1 trip */}
             
         </div>
+        
   )
 }
 

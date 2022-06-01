@@ -1,14 +1,14 @@
 import React from 'react'
 import './ShoppingPage.css'
 import {List, Input, Button} from 'reactstrap'
+import { useNavigate } from 'react-router-dom'
 
 let tripID = null
 const apiVersion="v1"
 
 function ShoppingPage() {
-  
   getTripID(showList);
-
+  let navigate = useNavigate();
   return (
     <div className='ShoppingPage'>
         
@@ -21,6 +21,7 @@ function ShoppingPage() {
 
         <Button onClick={showSubtotal}>Checkout</Button>
         <div id="subtotals"></div>
+        <Button onClick={deleteUser}>Quit</Button>
     </div>
   )
 
@@ -130,6 +131,24 @@ async function showSubtotal() {
         document.getElementById("subtotals").innerText += `${data.username}, ${data.subtotal}\n`
       })
     })
+  }catch(error){
+    throw(error)
+  }
+}
+
+
+async function deleteUser(){
+  try{
+    const deleteHandler = async (tripID) => {
+      // currently, endpoint only prints out selected item
+      const requestOptions = {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' }
+      };
+      await fetch(`api/${apiVersion}/trips/delete?tripID=${tripID}`, requestOptions)
+    }
+    deleteHandler(tripID)
+    navigate("/mainpage")
   }catch(error){
     throw(error)
   }
