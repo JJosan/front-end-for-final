@@ -87,8 +87,10 @@ function MainPage() {
                     if (data.status === "error") {
                         navigate("/mainpage")
                         alert(data.error)
+                    } else {
+                        navigate("/shoppingpage")
                     }
-                    navigate("/shoppingpage")
+                    
                 });
             
         } catch(error) {

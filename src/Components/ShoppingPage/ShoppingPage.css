@@ -18,7 +18,21 @@
     color: #00318d;
     font-weight: bold;
     font-size: 1.25em;
-    margin-bottom: 50px
+    margin-bottom: 30px
+}
+
+.ShoppingPage_userDetail {
+    display: flex;
+    color: #00318d;
+    font-weight: bold;
+    font-size: 1.25em;
+    margin-bottom: 10px
+}
+
+#Username {
+    color:dimgrey;
+    font-weight: 400;
+    font-size: 2em;
 }
 
 #tripID {
