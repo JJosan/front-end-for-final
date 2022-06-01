@@ -1,8 +1,7 @@
 import React from 'react'
 import './ShoppingPage.css'
-import {List, Input, Button, Table} from 'reactstrap'
+import {List, Input, Button} from 'reactstrap'
 import { useNavigate } from 'react-router-dom'
-import { upload } from '@testing-library/user-event/dist/upload'
 
 let tripID = null
 const apiVersion="v1"

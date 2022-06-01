@@ -18,17 +18,11 @@ function MyNavbar() {
 
           <NavItem><NavLink href="/HowTo">How to use</NavLink></NavItem>
 
-          <NavItem><NavLink href="/about">About Us</NavLink></NavItem>
 
-          {/* <div>{
-        checkLogin()
-          ? ( */}
             <NavItem><NavLink href='/signin'>Sign In</NavLink></NavItem>
-            {/* )
-          : (  */}
+  
             <NavItem><NavLink href='signout'>Sign Out</NavLink></NavItem>
-            {/* )
-      }</div> */}
+
 
       </Nav>
     </Collapse>
