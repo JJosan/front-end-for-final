@@ -5,7 +5,10 @@ import { Link } from 'react-router-dom'
 
 const apiVersion = "v1"
 
+
+
 function MainPage() {
+    
 
     async function createNewTrip(){
         await fetch(`api/${apiVersion}/trips/add`,{
