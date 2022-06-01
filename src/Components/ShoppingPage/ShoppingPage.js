@@ -113,7 +113,7 @@ async function getTripID(callback){
     .then(response => response.json())
     .then(data => {
       tripID = data.tripID
-      document.getElementById("tripID").innerHTML = data.tripID
+      document.getElementById("tripID").innerHTML = `Join ID: ${data.tripID}`;
     })
     callback();
   }catch(error){

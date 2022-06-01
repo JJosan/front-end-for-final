@@ -1,7 +1,8 @@
 import React, {useState} from 'react'
 import './MainPage.css'
-import {Button, Input, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap'
+import {Button, Input, Modal, ModalBody, ModalFooter} from 'reactstrap'
 import { Link, useNavigate } from 'react-router-dom'
+// import {displayError} from '../Utils/utils.js'
 
 const apiVersion = "v1"
 
@@ -18,15 +19,22 @@ function MainPage() {
         })
         .then(response => {
             response.json().then((data) => {
-                console.log(JSON.stringify(data.ID))
-                document.getElementById("joinID").innerText=`Join ID: ${data.ID}`;
+                let tripID = JSON.stringify(data.ID)
+                if (tripID) {
+                    console.log(tripID)
+                    navigate("/shoppingpage");
+                } else {
+                    navigate("/mainpage")  
+                    alert("Please log in to create a group.")
+                }
+
             }).catch((err) => {
+                alert("Something broke")
                 console.log(err)
             })
         })
-        navigate("/shoppingpage");
+        
     }
-
 
     async function joinTrip(){
         let tripID = document.getElementById("tripIDInput").value;
@@ -39,12 +47,28 @@ function MainPage() {
             };
             await fetch(`api/${apiVersion}/trips/addUser`, requestOptions)
                 .then(response => response.json())
-                .then(data => console.log(data));
-            navigate("/shoppingpage");
+                .then(data  => {
+                    if (data.status === "error") {
+                        navigate("/mainpage")
+                        alert(data.error)
+                    }
+                    navigate("/shoppingpage")
+                });
+            
         } catch(error) {
             throw(error)
         }
     }
+
+    // async function displayError(errorText){
+    //     document.getElementById('errorInfo').innerText = errorText
+    //     document.getElementById('errorInfo').style.opacity = 1
+    //     // pause 4 seconds
+    //     await new Promise(resolve => setTimeout(resolve, 4 * 1000))
+    //     document.getElementById('errorInfo').innerText= ''
+    //     document.getElementById('errorInfo').style.opacity = 0
+    // }
+    
 
     return (
         <div className='MainPage_container'>
@@ -56,6 +80,7 @@ function MainPage() {
                 <Button id='MainPage_JoinTrip' onClick={toggleModal}>
                     Join Group
                 </Button>
+                <div id="errorInfo" className="alert alert-danger fade show" role="alert" style={{opacity:0}}></div>
                 <Modal isOpen={modal}>
                     {/* <ModalHeader> Modal title </ModalHeader> */}
                     <ModalBody>  
