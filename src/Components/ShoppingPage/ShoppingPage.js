@@ -126,7 +126,20 @@ async function showList(){
       for (let i = 0; i < receipt.length; i++) {
         var listItem = document.createElement("div")
         listItem.className = 'items'
-        listItem.innerHTML = `Item:${receipt[i].NameOfItem} \n Quantity:${receipt[i].Quantity} <br>`
+
+        var itemName = document.createElement("div")
+        itemName.className = "itemName"
+
+        var item = document.createElement("p")
+        item.textContent = `Item: ${receipt[i].NameOfItem}`
+        itemName.appendChild(item)
+
+        var itemQ = document.createElement("p")
+        itemQ.textContent = `Quantity:${receipt[i].Quantity}`
+        itemName.appendChild(itemQ)
+
+        var container = document.createElement("div")
+        container.className = "inputItems"
 
         var deleteButtonItem = document.createElement("Button")
         deleteButtonItem.innerHTML = "delete"
@@ -161,10 +174,11 @@ async function showList(){
         // itemList.appendChild(priceItem);
         // itemList.appendChild(uploadPriceButton);
 
-        listItem.appendChild(deleteButtonItem);
-        listItem.appendChild(priceItem);
-        listItem.appendChild(uploadPriceButton);
-
+        container.appendChild(deleteButtonItem);
+        container.appendChild(priceItem);
+        container.appendChild(uploadPriceButton);
+        listItem.appendChild(itemName)
+        listItem.appendChild(container)
 
         shoppingList.appendChild(listItem);
         // itemList.appendChild(shoppingList);

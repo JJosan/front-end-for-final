@@ -80,3 +80,12 @@
 #quitGroup {
     margin-top: 15px;
 }
+
+.inputItems {
+    display: flex;
+    width: 80%;
+}
+
+.itemName {
+    width: 20%;
+}
