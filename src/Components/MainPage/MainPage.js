@@ -13,6 +13,42 @@ function MainPage() {
     const [modal, setModal] = useState(false);
     const toggleModal = () => setModal(!modal);
 
+    return (
+        <div className='MainPage_container'>
+            <div className='MainPage'>
+                {/* server blows up if the same person makes more than 1 trip */} 
+                <div className="TitlePage">DivvyUp</div>
+                <Link to='shoppingpage'><Button id='MainPage_CreateTrip' onClick={createNewTrip}>Host New Group</Button></Link>
+                <div>
+                    <Button id='MainPage_JoinTrip' onClick={toggleModal}>
+                        Join Group
+                    </Button>
+                    <div id="errorInfo" className="alert alert-danger fade show" role="alert" style={{opacity:0}}></div>
+                    <Modal isOpen={modal}>
+                        {/* <ModalHeader> Modal title </ModalHeader> */}
+                        <ModalBody>  
+                            <Input name="tripIDInput" id="tripIDInput" placeholder="Input TripID" />
+                        </ModalBody>
+                        <ModalFooter>
+                            <Link to='shoppingpage'>
+                                <Button color="primary" onClick={joinTrip}>
+                                    Join Group
+                                </Button>
+                            </Link>
+                            {' '}
+                            <Button onClick={toggleModal}>
+                                Cancel
+                            </Button>
+                        </ModalFooter>
+                    </Modal>
+                </div>
+            </div>
+                
+            {/* server blows up if the same person makes more than 1 trip */}
+            
+        </div>
+  )
+
     async function createNewTrip(){
         await fetch(`api/${apiVersion}/trips/add`,{
             method: "POST"
@@ -59,54 +95,6 @@ function MainPage() {
             throw(error)
         }
     }
-
-    // async function displayError(errorText){
-    //     document.getElementById('errorInfo').innerText = errorText
-    //     document.getElementById('errorInfo').style.opacity = 1
-    //     // pause 4 seconds
-    //     await new Promise(resolve => setTimeout(resolve, 4 * 1000))
-    //     document.getElementById('errorInfo').innerText= ''
-    //     document.getElementById('errorInfo').style.opacity = 0
-    // }
-    
-
-    return (
-        <div className='MainPage_container'>
-            <div className='MainPage'>
-            {/* server blows up if the same person makes more than 1 trip */} 
-                <div className="TitlePage">DivvyUp</div>
-                <Link to='shoppingpage'><Button id='MainPage_CreateTrip' onClick={createNewTrip}>Host New Group</Button></Link>
-                <div>
-                <Button id='MainPage_JoinTrip' onClick={toggleModal}>
-                    Join Group
-                </Button>
-                <div id="errorInfo" className="alert alert-danger fade show" role="alert" style={{opacity:0}}></div>
-                <Modal isOpen={modal}>
-                    {/* <ModalHeader> Modal title </ModalHeader> */}
-                    <ModalBody>  
-                        <Input name="tripIDInput" id="tripIDInput" placeholder="Input TripID" />
-                    </ModalBody>
-                    <ModalFooter>
-                        <Link to='shoppingpage'>
-                            <Button color="primary" onClick={joinTrip}>
-                                Join Group
-                            </Button>
-                        </Link>
-                        {' '}
-                        <Button onClick={toggleModal}>
-                            Cancel
-                        </Button>
-                    </ModalFooter>
-                </Modal>
-            </div>
-            </div>
-                
-            
-            {/* server blows up if the same person makes more than 1 trip */}
-            
-        </div>
-        
-  )
 }
 
 

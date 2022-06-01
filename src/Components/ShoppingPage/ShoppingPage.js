@@ -1,7 +1,8 @@
 import React from 'react'
 import './ShoppingPage.css'
-import {List, Input, Button} from 'reactstrap'
+import {List, Input, Button, Table} from 'reactstrap'
 import { useNavigate } from 'react-router-dom'
+import { upload } from '@testing-library/user-event/dist/upload'
 
 let tripID = null
 const apiVersion="v1"
@@ -10,18 +11,63 @@ function ShoppingPage() {
   getTripID(showList);
   let navigate = useNavigate();
   return (
-    <div className='ShoppingPage'>
-        
-        <Input name="itemNameInput" id="itemNameInput" placeholder="Input item name" />
-        <Input name="itemQuantityInput" id="itemQuantityInput" placeholder="Input item quantity" />
-        <Button onClick={addItem}>add item</Button>
-        <Button onClick={showList}>Refresh List</Button>
-        <div id="tripID"></div>
-        <List type="inline" id="shoppingList"></List>
+    <div className='ShoppingPage_container'>
+      <div className='ShoppingPage'>
 
-        <Button onClick={showSubtotal}>Checkout</Button>
-        <div id="subtotals"></div>
-        <Button onClick={deleteUser}>Quit</Button>
+          <div className='ShoppingPage_joinDetail'>
+            Join ID: <div id='tripID'></div>
+          </div>
+
+          <div className='ShoppingPage_inputDetail'>
+            <Input name="itemNameInput" id="itemNameInput" placeholder="Input item name" />
+            <Input name="itemQuantityInput" id="itemQuantityInput" placeholder="Input item quantity" />
+          </div>
+         
+         <div className='ShoppingPage_buttonDetail'>
+            <Button id="addItemButton" onClick={addItem}>add item</Button>
+            <Button id="refreshListButton" onClick={showList}>Refresh List</Button>
+            {/* <Table hover>
+              <thead>
+                <tr>
+                  <th> Item </th>
+                  <th> Total Quantity </th>
+                  <th> Your Quantity </th>
+                  <th> Who is buying </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td> Mark </td>
+                  <td> Otto </td>
+                  <td> @mdo </td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td> Jacob </td>
+                  <td> Thornton </td>
+                  <td> @fat </td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td> Larry </td>
+                  <td> the Bird </td>
+                  <td> @twitter </td>
+                  <td></td>
+                </tr>
+              </tbody> */}
+            {/* </Table> */}
+            <div className="ShoppingPage_listDetail">
+              <List type="inline" id="shoppingList"></List>
+            </div>
+
+
+         </div>
+
+
+          <Button color="success"onClick={showSubtotal}>Checkout</Button>
+          <div id="subtotals"></div>
+          <Button id="quitGroup" color="danger" onClick={deleteUser}>Quit</Button>
+      </div>
     </div>
   )
 
@@ -70,14 +116,18 @@ async function showList(){
     await fetch(`api/${apiVersion}/items/receipt?tripID=${tripID}`)
     .then(response => response.json())
     .then(receipt => {
+
       var shoppingList = document.getElementById("shoppingList")
       shoppingList.innerHTML = ''
+
       for (let i = 0; i < receipt.length; i++) {
-        var listItem = document.createElement("ListInlineItem")
-        listItem.innerHTML = `${receipt[i].NameOfItem}:${receipt[i].Quantity} <br>`
+        var listItem = document.createElement("div")
+        listItem.className = 'items'
+        listItem.innerHTML = `Item:${receipt[i].NameOfItem} \n Quantity:${receipt[i].Quantity} <br>`
 
         var deleteButtonItem = document.createElement("Button")
         deleteButtonItem.innerHTML = "delete"
+        deleteButtonItem.className = "btn btn-secondary"
         deleteButtonItem.id = receipt[i]._id;
         deleteButtonItem.addEventListener("click", function(){
           deleteHandler(receipt[i]._id)
@@ -86,20 +136,35 @@ async function showList(){
         var priceItem = document.createElement("Input")
         priceItem.setAttribute("type", "text")
         priceItem.id = "Input" + receipt[i]._id;
+        priceItem.className = "form-control priceInput"
+        priceItem.placeholder = "Enter Item Subtotal"
 
         var uploadPriceButton = document.createElement("Button")
         uploadPriceButton.innerHTML = "Upload"
         uploadPriceButton.id = "Button" + receipt[i]._id;
+        uploadPriceButton.className = "btn btn-secondary"
         uploadPriceButton.addEventListener("click", function(){
             var priceInput = document.getElementById(`Input${receipt[i]._id}`).value
             console.log(document.getElementById(`Input${receipt[i]._id}`))
             uploadPriceHandler(receipt[i]._id, priceInput)
         })
 
-        shoppingList.appendChild(deleteButtonItem);
-        shoppingList.appendChild(priceItem);
-        shoppingList.appendChild(uploadPriceButton);
+        
+        // shoppingList.appendChild(deleteButtonItem);
+        // shoppingList.appendChild(priceItem);
+        // shoppingList.appendChild(uploadPriceButton);
+        // itemList.appendChild(listItem);
+        // itemList.appendChild(deleteButtonItem);
+        // itemList.appendChild(priceItem);
+        // itemList.appendChild(uploadPriceButton);
+
+        listItem.appendChild(deleteButtonItem);
+        listItem.appendChild(priceItem);
+        listItem.appendChild(uploadPriceButton);
+
+
         shoppingList.appendChild(listItem);
+        // itemList.appendChild(shoppingList);
       } 
     })   
   }catch(error) {
@@ -113,7 +178,7 @@ async function getTripID(callback){
     .then(response => response.json())
     .then(data => {
       tripID = data.tripID
-      document.getElementById("tripID").innerHTML = `Join ID: ${data.tripID}`;
+      document.getElementById("tripID").innerHTML = `${data.tripID}`;
     })
     callback();
   }catch(error){
